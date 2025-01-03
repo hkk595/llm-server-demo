@@ -7,11 +7,10 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 def llm_fine_tune(pretrained_model: str, train_dataset: str, output_path: str, app):
     # Load the model
+    quantization_config = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype=getattr(torch, "float16"),
+                                             bnb_4bit_quant_type="nf4")
     llm_model = AutoModelForCausalLM.from_pretrained(pretrained_model_name_or_path=pretrained_model,
-                                                     quantization_config=BitsAndBytesConfig(load_in_4bit=True,
-                                                                                            bnb_4bit_compute_dtype=getattr(
-                                                                                                torch, "float16"),
-                                                                                            bnb_4bit_quant_type="nf4"))
+                                                     quantization_config=quantization_config)
     llm_model.config.use_cache = False
     llm_model.config.pretraining_tp = 1
 
