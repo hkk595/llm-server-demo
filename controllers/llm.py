@@ -2,7 +2,7 @@ import torch
 from trl import SFTTrainer
 from peft import LoraConfig
 from datasets import load_dataset
-from transformers import (AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments, pipeline)
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments, pipeline
 
 
 def llm_fine_tune(pretrained_model_path: str, train_dataset_path: str, output_path: str, app):
@@ -44,5 +44,5 @@ def llm_fine_tune(pretrained_model_path: str, train_dataset_path: str, output_pa
 def llm_prompt(user_prompt: str, llm_model, llm_tokenizer):
     text_generation_pipeline = pipeline(task="text-generation", model=llm_model, tokenizer=llm_tokenizer,
                                         max_length=300)
-    model_answer = text_generation_pipeline(f"<s>[INST] {user_prompt} [/INST]")
+    model_answer = text_generation_pipeline(user_prompt)
     return model_answer[0]['generated_text']
