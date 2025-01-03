@@ -2,8 +2,8 @@ from pydantic import BaseModel
 
 
 class LLM(BaseModel):
-    pretrained_model_path: str
-    train_dataset_path: str
+    pretrained_model: str
+    train_dataset: str
 
 
 class Prompt(BaseModel):

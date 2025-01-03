@@ -16,7 +16,7 @@ app.tokenizer = None
 @app.post("/fine-tune")
 async def fine_tune(llm: LLM, background_tasks: BackgroundTasks):
     app.model_trained = False
-    background_tasks.add_task(llm_fine_tune, llm.pretrained_model_path, llm.train_dataset_path, output_path, app)
+    background_tasks.add_task(llm_fine_tune, llm.pretrained_model, llm.train_dataset, output_path, app)
     return {"status": "The model is being trained."}
 
 
